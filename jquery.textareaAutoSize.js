@@ -36,28 +36,32 @@
         return $elments.each(function() {
             
             //Add event for each element
-            $(this).on('input keyup', function(event) {
+            $(this, 'textarea').on('input keyup', function(event) {
                 
-                var $window = $(window);
-                var $current_scroll_position = $window.scrollTop();
+                if($(this).is('textarea'))
+                {
+                    var $window = $(window);
+                    var $current_scroll_position = $window.scrollTop();
 
 
-                //Apply Min Height Check
-                var $changed_height=this.scrollHeight;
-                if($changed_height<settings.min_height)
-                {
-                    var $changed_height=settings.min_height;
+                    //Apply Min Height Check
+                    var $changed_height=this.scrollHeight;
+                    if($changed_height<settings.min_height)
+                    {
+                        var $changed_height=settings.min_height;
+                    }
+
+                    if($changed_height>settings.max_height)
+                    {
+                       $(this).css('overflow-y', 'scroll');
+                       $window.scrollTop($current_scroll_position); 
+                    }
+                    else
+                    {
+                        $(this).css('overflow-y', 'hidden').css('height', $changed_height);
+                    }
                 }
                 
-                if($changed_height>settings.max_height)
-                {
-                   $(this).css('overflow-y', 'scroll');
-                   $window.scrollTop($current_scroll_position); 
-                }
-                else
-                {
-                    $(this).css('overflow-y', 'hidden').css('height', $changed_height);
-                }
 
 
 
